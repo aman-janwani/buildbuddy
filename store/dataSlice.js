@@ -11,12 +11,15 @@ export const dataSlice = createSlice({
     addData: (state, action) => {
       state.data = { ...action.payload };
     },
+    updateData: (state, action) => {
+      state.data = { ...state.data, ...action.payload };
+    },
     removeData: (state, action) => {
       state.data = {};
     },
   },
 });
 
-export const { addData, removeData } = dataSlice.actions;
+export const { addData, removeData, updateData } = dataSlice.actions;
 
 export default dataSlice.reducer;
