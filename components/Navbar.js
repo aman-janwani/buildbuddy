@@ -14,13 +14,13 @@ const Navbar = ({session}) => {
         router.push("/");
       }} className="py-4 flex cursor-pointer items-center space-x-3">
         <Image src={logo} alt="logo" width={45} height={45} />
-        <h1 className="font-['Cairo'] text-xl">Build Buddy</h1>
+        <h1 className="font-['Cairo'] text-sm md:text-xl">Build Buddy</h1>
       </div>
       <div>
         {session ? (
           <p onClick={() => {
             router.push("/dashboard");
-          }} className="text-buildbuddyPurple cursor-pointer">DashBoard</p>
+          }} className="text-buildbuddyPurple cursor-pointer hover:text-lg duration-700">DashBoard</p>
         ) : ("")}
       </div>
       <div>
@@ -35,16 +35,16 @@ const Navbar = ({session}) => {
             title="Sign Out"
           />
         ) : (
-          <div className="space-x-4">
+          <div className="space-x-4 flex">
             <button
               onClick={signIn}
-              className="border-[3px] px-5 py-1 h-fit rounded-lg duration-500 text-buildbuddyBlueDark font-medium border-buildbuddyBlueDark hover:bg-buildbuddyBlueDark hover:text-white"
+              className="border-[3px] px-3 md:px-5 py-1 h-fit rounded-lg duration-500 text-buildbuddyBlueDark font-medium border-buildbuddyBlueDark hover:bg-buildbuddyBlueDark hover:text-white"
             >
               Register
             </button>
             <button
               onClick={signIn}
-              className="border-[3px] px-5 py-1 h-fit rounded-lg duration-500 text-white font-medium border-buildbuddyBlueDark bg-buildbuddyBlueDark hover:bg-white hover:text-buildbuddyBlueDark"
+              className="border-[3px] px-3 md:px-5 py-1 h-fit rounded-lg duration-500 text-white font-medium border-buildbuddyBlueDark bg-buildbuddyBlueDark hover:bg-white hover:text-buildbuddyBlueDark"
             >
               Login
             </button>

@@ -13,26 +13,31 @@ const DigitalPortfolios = () => {
     {
       image: image,
       title: "one",
+      avalible: true,
     }
     ,
     {
       image: image2,
       title: "two",
+      avalible: true,
     }
     ,
     {
       image: image3,
       title: "three",
+      avalible: true,
     }
     ,
     {
       image: image4,
       title: "four",
+      avalible: false,
     }
     ,
     {
       image: image5,
       title: "five",
+      avalible: false,
     }
   ];
 
@@ -55,7 +60,7 @@ const DigitalPortfolios = () => {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5 py-5">
         {Templates.map((template, index) => {
-          return <PortfolioTemplate image={template.image} slug={template.title} key={index} />;
+          return <PortfolioTemplate avalible={template.avalible} image={template.image} slug={template.title} key={index} />;
         })}
       </div>
     </div>

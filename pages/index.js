@@ -4,10 +4,10 @@ import DigitalPortfolios from "../components/DigitalPortfolios";
 import HeroSection from "../components/HeroSection";
 import Linkesy from "../components/Linkesy";
 import Navbar from "../components/Navbar";
-import { useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
+import Footer from "../components/Footer";
 
 export default function Home() {
-  
   const { data: session } = useSession();
 
   return (
@@ -33,10 +33,11 @@ export default function Home() {
           <DigitalPortfolios />
         </section>
         {/* Linkesy */}
-        <section className="bg-buildbuddyBlueLight">
+        {/* <section className="bg-buildbuddyBlueLight">
           <Linkesy session={session} />
-        </section>
+        </section> */}
       </main>
+      <Footer />
     </div>
   );
 }

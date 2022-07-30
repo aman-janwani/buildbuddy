@@ -75,7 +75,6 @@ const ProjectsTab = () => {
       .catch((err) => console.log(err));
   };
 
-  console.log(projects);
 
   return (
     <div className="text-center py-5">

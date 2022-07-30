@@ -8,44 +8,32 @@ import { useDispatch, useSelector } from "react-redux";
 import { addData, removeData, dataSlice, updateData } from "../store/dataSlice";
 import ContactTab from "./ContactTab";
 
-const Tabs = () => {
+const Tabs = ({query}) => {
   const [works, setWorks] = useState("");
   const [skills, setSkills] = useState([]);
+  const [image, setImage] = useState("");
 
   const [defaultData, setDefaultData] = useState({
-    name: "👋 I’m Aman Janwani",
-    position: "FRONT-END WEB DEVELOPER | STUDENT",
-    backgroundColor: "#4A5096",
-    textColor: "#FFFFFF",
-    image:
-      "https://res.cloudinary.com/dfk5jbk5r/image/upload/v1658768847/profilepic2_2_f1yhyv.png",
-    about:
-      "RTK Query ensures that any component subscribes to the same query will always use the same data. RTK Query automatically de-dupes requests so you don't have to worry about checking in",
-    work: ["Freelancer 2022 - present", "Apple 2022 - present"],
-    skills: [
-      {
-        label: "React Js",
-        value: "reactjs",
-      },
-      {
-        label: "React Js",
-        value: "reactjs",
-      },
-      {
-        label: "React Js",
-        value: "reactjs",
-      },
-    ],
+    name: "",
+    position: "",
+    query: query.slug,
+    backgroundColor: "",
+    textColor: "",
+    image: "",
+    about: "",
+    work: [],
+    skills: [],
     projects: [],
     testimonials: [],
     contact: {
-      name: "Aman Janwani",
-      email: "amanjanwani1486@gmail.com",
-      address: "Pupshraj Colony Satna, Madhya Pradesh 485001",
-      phone: "7879599816",
+      name: "",
+      email: "",
+      address: "",
+      phone: "",
     },
     links: [],
   });
+
   const dispatch = useDispatch();
   const data = useSelector((state) => state.dataSlice.data);
 
@@ -54,6 +42,24 @@ const Tabs = () => {
   }, [dispatch, defaultData]);
 
   console.log(data);
+
+  const handleChangeImage = (e) => {
+    console.log(e.target.files[0]);
+    const data = new FormData();
+    data.append("file", e.target.files[0]);
+    data.append("upload_preset", "m7poddhz");
+    data.append("cloud_name", "dfk5jbk5r");
+    fetch("https://api.cloudinary.com/v1_1/dfk5jbk5r/image/upload", {
+      method: "post",
+      body: data,
+    })
+      .then((resp) => resp.json())
+      .then((data) => {
+        setImage(data.url);
+        dispatch(updateData({ image: data.url }));
+      })
+      .catch((err) => console.log(err));
+  };
 
   const options = [
     { value: "reactjs", label: "React Js" },
@@ -104,7 +110,7 @@ const Tabs = () => {
   return (
     <div>
       <Tab.Group>
-        <Tab.List className="w-full justify-between flex">
+        <Tab.List className="w-full justify-between outline-none overflow-x-scroll space-x-3 flex">
           <Tab
             className={({ selected }) =>
               selected
@@ -166,6 +172,24 @@ const Tabs = () => {
               <h1 className="text-2xl">About</h1>
               <div className="flex flex-col space-y-3 max-w-md mx-auto my-5 justify-center">
                 <input
+                  type="file"
+                  className="text-sm text-grey-500
+            file:mr-5 file:py-2 file:px-6
+            file:rounded-lg file:border-0
+            file:text-sm file:font-medium
+            file:bg-buildbuddyYellowLight file:text-white
+            hover:file:cursor-pointer hover:file:brightness-125
+            hover:file:text-amber-700 "
+                  onChange={handleChangeImage}
+                />
+                <input
+                  type="text"
+                  disabled={true}
+                  className="bg-[#EFF6F6] h-10 outline-none focus:border-buildbuddyBlueDark border-4 p-3 rounded-xl "
+                  placeholder="Image link"
+                  value={image}
+                />
+                <input
                   type="text"
                   className="bg-[#EFF6F6] outline-none focus:border-buildbuddyBlueDark border-4 p-3 rounded-xl "
                   placeholder="Your Name"
@@ -184,7 +208,7 @@ const Tabs = () => {
                   }}
                 />
                 <textarea
-                  className="bg-[#EFF6F6] outline-none focus:border-buildbuddyBlueDark border-4 p-3 rounded-xl max-h-40"
+                  className="bg-[#EFF6F6] outline-none focus:border-buildbuddyBlueDark border-4 p-3 rounded-xl max-h-48"
                   placeholder="About"
                   value={data.about}
                   onChange={(e) => {
@@ -243,7 +267,7 @@ const Tabs = () => {
                     value={data.backgroundColor}
                     onChange={(e) => {
                       dispatch(updateData({ backgroundColor: e.target.value }));
-                    } }
+                    }}
                   />
                 </div>
                 <div className="flex items-center  p-3 bg-[#EFF6F6] rounded-lg justify-between">
@@ -254,7 +278,7 @@ const Tabs = () => {
                     value={data.textColor}
                     onChange={(e) => {
                       dispatch(updateData({ textColor: e.target.value }));
-                    } }
+                    }}
                   />
                 </div>
               </div>

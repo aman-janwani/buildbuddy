@@ -16,8 +16,8 @@ const OneAbout = () => {
       <div className="items-start text-center md:text-start space-y-4">
         <h1 className="text-xl font-bold">About Me</h1>
         <p className="md:max-w-md font-medium text-sm tracking-wider px-2 leading-5">
-          I’m a 16 year old Web Developer. I've been coding for over 1 years now
-          As a React Js Developer. Curently I'm Studing in Class 11th I have
+          Im a 16 year old Web Developer. Ive been coding for over 1 years now
+          As a React Js Developer. Curently Im Studing in Class 11th I have
           experience in React Js and interested in learning new technologies. My
           Goal is to be a MERN Stack Developer. Contact me for any collabrations
           for any React Js .

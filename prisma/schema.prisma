@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = "mysql://root@127.0.0.1:3309/buildbuddy"
+  url = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
 
@@ -44,6 +44,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  portfolio     Portfolio?
 }
 
 model VerificationToken {
@@ -52,4 +53,22 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+
+model Post {
+  id     Int    @id @default(autoincrement())
+  name   String
+  postId Int
+  portfolio Portfolio @relation(fields: [postId], references: [id], onDelete: Cascade)
+}
+
+model Portfolio {
+  id      Int   @default(autoincrement()) @id
+  name    String
+  userEmail   String @unique
+  subject String?
+  message String
+  post    Post[]
+  user    User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }

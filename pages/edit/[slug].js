@@ -5,6 +5,7 @@ import { useSession } from "next-auth/react";
 import Navbar from "../../components/Navbar";
 import Home from "..";
 import Tabs from "../../components/Tabs";
+import Footer from "../../components/Footer";
 
 const Edit = () => {
   const { data: session } = useSession();
@@ -43,9 +44,10 @@ const Edit = () => {
       <main className="">
         {/* Tabs */}
         <div className="p-5 w-full rounded-lg h-full">
-          <Tabs />
+          <Tabs query={router.query} />
         </div>
       </main>
+      <Footer />
     </div>
   );
 };

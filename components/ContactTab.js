@@ -22,10 +22,8 @@ const ContactTab = () => {
     }
   };
 
-  const handleChangeLinks = () => {
-    if (name && email && address && phone) {
-      dispatch(updateData({ contact: { name, email, address, phone } }));
-    }
+  const handleChangeLink = () => {
+    dispatch(updateData({links: links}));
   };
 
   useEffect(() => {
@@ -46,9 +44,21 @@ const ContactTab = () => {
         name: "Youtube",
         url: youtube,
       },
-    ]);
-    dispatch(updateData({links: links}));
+    ]);      
   }, [linkedin, instagram, github, youtube]);
+
+  useEffect(() => {
+    if (data.links.length > 0) {
+      setInstagram(data.links[0].url);
+      setGithub(data.links[1].url);
+      setLinkedin(data.links[2].url);
+      setYoutube(data.links[3].url);
+    }
+    setAddress(data.contact.address);
+    setEmail(data.contact.email);
+    setName(data.contact.name);
+    setPhone(data.contact.phone);
+  }, [data]);
 
   return (
     <div className="text-center">
@@ -93,9 +103,9 @@ const ContactTab = () => {
         <div className="flex justify-center py-10">
           <button
             onClick={handleChange}
-            className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full rounded-lg"
+            className="bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full rounded-lg"
           >
-            Add
+            Add Contact
           </button>
         </div>
         <h1 className="text-xl">Links</h1>
@@ -136,6 +146,14 @@ const ContactTab = () => {
               setGithub(e.target.value);
             }}
           />
+        </div>
+        <div className="flex justify-center py-10">
+          <button
+            onClick={handleChangeLink}
+            className="bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full rounded-lg"
+          >
+            Add Links
+          </button>
         </div>
       </div>
     </div>

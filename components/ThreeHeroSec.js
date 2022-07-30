@@ -6,7 +6,7 @@ const ThreeHeroSec = () => {
     <div className="flex w-full flex-col md:flex-row justify-between items-center space-y-11 md:space-y-0 py-16 md:py-0">
       <div className="w-full md:w-1/2 flex justify-center">
         <div className="text-center space-y-8 uppercase">
-          <h1 className="text-3xl md:text-6xl">👋 I’m Aman Janwani</h1>
+          <h1 className="text-3xl md:text-6xl">👋 Im Aman Janwani</h1>
           <h2 className="text-sm md:text-base">
             FRONT-END WEB DEVELOPER | Student
           </h2>

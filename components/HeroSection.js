@@ -14,9 +14,9 @@ new Typewriter("#typewriter", {
 
 const HeroSection = () => {
   return (
-    <div className="flex items-center  pl-8">
-      <div className=" w-1/2">
-        <h2 className="text-7xl text-buildbuddyPurple">
+    <div className="flex flex-col py-20 lg:py-0 lg:flex-row items-center lg:pl-8">
+      <div className=" lg:w-1/2">
+        <h2 className="text-4xl lg:text-7xl text-buildbuddyPurple">
           One Stop Solution For
           <span className="text-buildbuddyBlueDark">
             <Typewriter
@@ -41,8 +41,8 @@ const HeroSection = () => {
           </span>
         </h2>
       </div>
-      <div className="w-1/2 h-[100vh] relative">
-        <div className="h-[89%] w-[85%] text-center rounded-t-full absolute bottom-0 right-0 bg-gradient-to-b from-buildbuddyYellowDark to-buildbuddyYellowLight">
+      <div className="lg:w-1/2 w-full h-[80vh] lg:h-[100vh] relative">
+        <div className="h-[89%] lg:w-[85%] text-center mx-auto rounded-t-full absolute bottom-0 right-0 bg-gradient-to-b from-buildbuddyYellowDark to-buildbuddyYellowLight">
           <Carousel
             renderArrowPrev={(onClickHandler, hasPrev, label) => hasPrev && ""}
             renderArrowNext={(onClickHandler, hasNext, label) => hasNext && ""}

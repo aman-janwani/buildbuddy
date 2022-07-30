@@ -13,6 +13,7 @@ import LinkesyImage from "../public/images/linkesy.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Home from ".";
+import Footer from "../components/Footer";
 
 
 const Dashboard = () => {
@@ -20,26 +21,31 @@ const Dashboard = () => {
     {
       image: image,
       title: "one",
+      avalible: true,
     }
     ,
     {
       image: image2,
       title: "two",
+      avalible: true,
     }
     ,
     {
       image: image3,
       title: "three",
+      avalible: true,
     }
     ,
     {
       image: image4,
       title: "four",
+      avalible: false,
     }
     ,
     {
       image: image5,
       title: "five",
+      avalible: false,
     }
   ];
 
@@ -70,11 +76,11 @@ const Dashboard = () => {
           </h1>
           <div className="flex overflow-x-scroll space-x-16 py-5">
             {Templates.map((template, index) => {
-              return <PortfolioTemplate  slug={template.title} image={template.image} key={index} />;
+              return <PortfolioTemplate avalible={template.avalible}  slug={template.title} image={template.image} key={index} />;
             })}
           </div>
         </div>
-        <div className="flex bg-buildbuddyBlueLight px-10 justify-between items-center">
+        {/* <div className="flex bg-buildbuddyBlueLight px-10 justify-between items-center">
           <div className="flex items-center space-x-4">
             <div className="bg-white flex rounded-full hover:shadow-lg duration-700 space-x-2 w-fit p-3 px-6 items-center">
               <h1 className="text-xl">https://linkesy/</h1>
@@ -95,7 +101,8 @@ const Dashboard = () => {
           <div>
             <Image src={LinkesyImage} alt="linkesy" width={500} height={500} />
           </div>
-        </div>
+        </div> */}
+        <Footer/>
       </main>
     </div>
   );
