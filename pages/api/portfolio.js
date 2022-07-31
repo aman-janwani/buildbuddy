@@ -6,7 +6,7 @@ export default async function handler(req, res) {
   if (req.method === "POST") {
     return await addPortfolio(req, res);
   } else if (req.method === "GET") {
-    return await readusers(req, res);
+    return await readPortfolios(req, res);
   } else {
     return res
       .status(405)
@@ -14,21 +14,57 @@ export default async function handler(req, res) {
   }
 }
 
+
 async function addPortfolio(req, res) {
   const body = req.body;
   try {
     const newEntry = await prisma.portfolio.create({
       include: {
-        post: true, // All posts where authorId == 20
+        projects: true,
+        work: true,
+        skills: true,
+        testimonials: true,
+        contact: true,
+        links: true,
+        user: true,
       },
       data: {
         name: body.name,
         userEmail: body.email,
-        subject: body.subject,
-        message: body.message,
-        post: {
-          create: body.post,
+        position: body.position,
+        query: body.query,
+        backgroundColor: body.backgroundColor,
+        textColor: body.textColor,
+        image: body.image,
+        about: body.about,
+        projects: {
+          create: body.projects,
         },
+        work: {
+          create: body.work,
+        },
+        skills: {
+          create: body.skills,
+        },
+        testimonials: {
+          create: body.testimonials,
+        },
+        links: {
+          create: body.links,
+        },
+        contact: {
+          create: {
+            name: body.contact.name,
+            email: body.contact.email,
+            address: body.contact.address,
+            phone: body.contact.phone,
+          },
+        },
+        user: {
+          connect: {
+            email: body.userEmail,
+          }
+        }
       },
     });
     console.log("data", newEntry);
@@ -40,18 +76,19 @@ async function addPortfolio(req, res) {
   }
 }
 
-async function readusers(req, res) {
+async function readPortfolios(req, res) {
   const body = req.body;
   try {
-    const books = await prisma.user.findMany({
+    const books = await prisma.portfolio.findMany({
       include: {
-       inquiry : true,
-       inquiry : {
-            include : {
-                post : true
-            }
-        }
-      }, 
+        projects: true,
+        work: true,
+        skills: true,
+        testimonials: true,
+        contact: true,
+        links: true,
+        user: true,
+      },
     });
     console.log("data", books);
     return res.status(200).json(books, { success: true });

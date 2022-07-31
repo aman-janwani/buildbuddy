@@ -56,19 +56,73 @@ model VerificationToken {
 }
 
 
-model Post {
+model Projects {
   id     Int    @id @default(autoincrement())
-  name   String
-  postId Int
-  portfolio Portfolio @relation(fields: [postId], references: [id], onDelete: Cascade)
+  name   String?
+  image String?
+  description String?
+  githubLink String?
+  liveLink String?
+  ProjectId Int
+  portfolio Portfolio @relation(fields: [ProjectId], references: [id], onDelete: Cascade)
+}
+
+model Work {
+  id     Int    @id @default(autoincrement())
+  title   String?
+  wordId Int
+  portfolio Portfolio @relation(fields: [wordId], references: [id], onDelete: Cascade)
+}
+
+model Skills {
+  id     Int    @id @default(autoincrement())
+  value   String?
+  label   String?
+  skillId Int
+  portfolio Portfolio @relation(fields: [skillId], references: [id], onDelete: Cascade)
+}
+
+model Testimonials {
+  id     Int    @id @default(autoincrement())
+  name   String?
+  description String?
+  testimonialId Int
+  portfolio Portfolio @relation(fields: [testimonialId], references: [id], onDelete: Cascade)
+}
+
+model Links {
+  id     Int    @id @default(autoincrement())
+  name   String?
+  url String?
+  linkId Int
+  portfolio Portfolio @relation(fields: [linkId], references: [id], onDelete: Cascade)
+}
+
+model Contact {
+  id     Int    @id @default(autoincrement())
+  name   String?
+  email String?
+  address String?
+  phone String?
+  contactId Int @unique
+  portfolio Portfolio @relation(fields: [contactId], references: [id], onDelete: Cascade)
 }
 
 model Portfolio {
   id      Int   @default(autoincrement()) @id
-  name    String
+  name    String?
   userEmail   String @unique
-  subject String?
-  message String
-  post    Post[]
+  position String?
+  query String?
+  backgroundColor String?
+  textColor String?
+  image String?
+  about String?
+  projects    Projects[]
+  work Work[]
+  skills Skills[]
+  testimonials Testimonials[]
+  contact Contact?
+  links Links[]
   user    User @relation(fields: [userEmail], references: [email], onDelete: Cascade)
 }

@@ -28,8 +28,8 @@ const ProjectsTab = () => {
   const [name, setName] = useState("");
   const [image, setImage] = useState("");
   const [description, setDescription] = useState("");
-  const [livelink, setLivelink] = useState("");
-  const [githublink, setGithublink] = useState("");
+  const [liveLink, setLiveLink] = useState("");
+  const [githubLink, setGithubLink] = useState("");
 
   const data = useSelector((state) => state.dataSlice.data);
   const dispatch = useDispatch();
@@ -43,10 +43,10 @@ const ProjectsTab = () => {
   }
 
   const handleClick = () => {
-    if (name && image && description && livelink && githublink) {
+    if (name && image && description && liveLink && githubLink) {
       setProjects([
         ...projects,
-        { name, image, description, livelink, githublink },
+        { name, image, description, liveLink, githubLink },
       ]);
       closeModal();
     }
@@ -152,15 +152,15 @@ const ProjectsTab = () => {
               type="text"
               className="bg-[#EFF6F6] outline-none focus:border-buildbuddyBlueDark border-4 p-3 rounded-xl "
               placeholder="Github Link"
-              value={githublink}
-              onChange={(e) => setGithublink(e.target.value)}
+              value={githubLink}
+              onChange={(e) => setGithubLink(e.target.value)}
             />
             <input
               type="text"
               className="bg-[#EFF6F6] outline-none focus:border-buildbuddyBlueDark border-4 p-3 rounded-xl "
               placeholder="Live Link"
-              value={livelink}
-              onChange={(e) => setLivelink(e.target.value)}
+              value={liveLink}
+              onChange={(e) => setLiveLink(e.target.value)}
             />
             <button
               onClick={handleClick}

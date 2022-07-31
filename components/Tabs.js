@@ -7,41 +7,60 @@ import ProjectsTab from "./ProjectsTab";
 import { useDispatch, useSelector } from "react-redux";
 import { addData, removeData, dataSlice, updateData } from "../store/dataSlice";
 import ContactTab from "./ContactTab";
+import { useSession } from "next-auth/react";
 
-const Tabs = ({query}) => {
+const Tabs = ({ query, user }) => {
   const [works, setWorks] = useState("");
   const [skills, setSkills] = useState([]);
+  const [newQuery, setNewQuery] = useState("");
   const [image, setImage] = useState("");
+
+  const { data: session } = useSession();
 
   const [defaultData, setDefaultData] = useState({
     name: "",
+    userEmail: session.user.email,
     position: "",
     query: query.slug,
     backgroundColor: "",
     textColor: "",
     image: "",
     about: "",
+    projects: [],
     work: [],
     skills: [],
-    projects: [],
     testimonials: [],
+    links: [],
     contact: {
       name: "",
       email: "",
       address: "",
       phone: "",
     },
-    links: [],
   });
 
   const dispatch = useDispatch();
   const data = useSelector((state) => state.dataSlice.data);
 
   useEffect(() => {
-    dispatch(addData(defaultData));
-  }, [dispatch, defaultData]);
+    // dispatch(addData(defaultData));
+    if (user) {
+      dispatch(addData(user.portfolio));
+      setImage(user.portfolio.image);
+      setSkills(user.portfolio.skills);
+      const userWorks = user.portfolio.work.map((work) => {
+        return work.title;
+      })
+      setWorks(userWorks.join("."));
+    } else {
+      dispatch(addData(defaultData));
+    }
+  }, [dispatch, defaultData, user]);
+  
+  
 
-  console.log(data);
+
+  console.log(data, "data");
 
   const handleChangeImage = (e) => {
     console.log(e.target.files[0]);
@@ -107,6 +126,51 @@ const Tabs = ({query}) => {
       return { ...provided, opacity, transition };
     },
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const body = data;
+    try {
+      const response = await fetch("/api/portfolio", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (response.status !== 200) {
+        console.log("something went wrong");
+        //set an error banner here
+      } else {
+        console.log("form submitted successfully !!!");
+        //set a success banner here
+      }
+      //check response, if success is false, dont take them to success page
+    } catch (error) {
+      console.log("there was an error submitting", error);
+    }
+  };
+
+  const handleSave = async (e) => {
+    e.preventDefault();
+    const body = data;
+    try {
+      const response = await fetch("/api/update", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      if (response.status !== 200) {
+        console.log("something went wrong");
+        //set an error banner here
+      } else {
+        console.log("form submitted successfully !!!");
+        //set a success banner here
+      }
+      //check response, if success is false, dont take them to success page
+    } catch (error) {
+      console.log("there was an error submitting", error);
+    }
+  };
+
   return (
     <div>
       <Tab.Group>
@@ -229,12 +293,19 @@ const Tabs = ({query}) => {
                   onChange={(e) => {
                     setWorks(e.target.value);
                     const workArry = e.target.value.split(".");
-                    dispatch(updateData({ work: workArry }));
+                    const workList = workArry.map((work) => {
+                      return {
+                        title: work,
+                      };
+                    });
+                    // console.log(workList);
+                    dispatch(updateData({ work: workList }));
                   }}
                 />
                 <h1 className="text-2xl">Skills</h1>
                 <Select
                   value={skills}
+                  defaultValue={skills}
                   styles={customStyles}
                   isMulti
                   options={options}
@@ -257,7 +328,7 @@ const Tabs = ({query}) => {
           </Tab.Panel>
           <Tab.Panel>
             <div className="text-center">
-              <h1 className="text-2xl">About</h1>
+              <h1 className="text-2xl">Colors</h1>
               <div className="flex flex-col space-y-3 max-w-sm mx-auto my-5 justify-center">
                 <div className="flex items-center  p-3 bg-[#EFF6F6] rounded-lg justify-between">
                   <p>Background Color</p>
@@ -287,7 +358,10 @@ const Tabs = ({query}) => {
         </Tab.Panels>
       </Tab.Group>
       <div className="flex justify-center">
-        <button className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full max-w-sm rounded-lg">
+        <button
+          onClick={handleSubmit}
+          className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full max-w-sm rounded-lg"
+        >
           Save
         </button>
       </div>

@@ -2,7 +2,7 @@ import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import Typewriter from "typewriter-effect";
 import image from "../public/images/one.png";
-import image2 from "../public/images/Two.png";
+import image2 from "../public/images/two.png";
 import image3 from "../public/images/img.png";
 import image4 from "../public/images/linkesyBanner.svg";
 import Image from "next/image";
