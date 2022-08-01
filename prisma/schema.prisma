@@ -118,6 +118,7 @@ model Portfolio {
   textColor String?
   image String?
   about String?
+  slug String? @unique
   projects    Projects[]
   work Work[]
   skills Skills[]

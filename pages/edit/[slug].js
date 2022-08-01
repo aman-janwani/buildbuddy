@@ -57,15 +57,15 @@ const Edit = ({ users }) => {
         <Head>
           <title>Edit</title>
         </Head>
-        <Navbar session={session} />
+        {user.portfolio ? (
+          <Navbar session={session} live={user} />
+        ) : (
+          <Navbar session={session} />
+        )}
         <main className="">
           {/* Tabs */}
           <div className="p-5 w-full rounded-lg h-full">
-            {user.portfolio ? (
-              <Tabs query={router.query} user={user} />
-            ) : (
-              <Tabs query={router.query} />
-            )}
+            <Tabs query={router.query} user={user} />
           </div>
         </main>
         <Footer />

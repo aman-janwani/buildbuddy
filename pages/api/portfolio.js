@@ -37,6 +37,7 @@ async function addPortfolio(req, res) {
         textColor: body.textColor,
         image: body.image,
         about: body.about,
+        slug: body.slug,
         projects: {
           create: body.projects,
         },

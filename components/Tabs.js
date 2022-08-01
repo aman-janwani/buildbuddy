@@ -8,12 +8,21 @@ import { useDispatch, useSelector } from "react-redux";
 import { addData, removeData, dataSlice, updateData } from "../store/dataSlice";
 import ContactTab from "./ContactTab";
 import { useSession } from "next-auth/react";
+import _ from "lodash";
+import { useRouter } from "next/router";
 
 const Tabs = ({ query, user }) => {
   const [works, setWorks] = useState("");
   const [skills, setSkills] = useState([]);
   const [newQuery, setNewQuery] = useState("");
   const [image, setImage] = useState("");
+  const router = useRouter();
+
+  useEffect(() => {
+    if (query.slug) {
+      setNewQuery(query.slug);
+    }
+  }, [query.slug]);
 
   const { data: session } = useSession();
 
@@ -21,7 +30,10 @@ const Tabs = ({ query, user }) => {
     name: "",
     userEmail: session.user.email,
     position: "",
-    query: query.slug,
+    query: "",
+    slug: session.user.email
+      .toLowerCase()
+      .slice(0, session.user.email.indexOf("@")),
     backgroundColor: "",
     textColor: "",
     image: "",
@@ -42,25 +54,68 @@ const Tabs = ({ query, user }) => {
   const dispatch = useDispatch();
   const data = useSelector((state) => state.dataSlice.data);
 
+  console.log(data, "data");
+
   useEffect(() => {
     // dispatch(addData(defaultData));
-    if (user) {
+    if (user.portfolio) {
       dispatch(addData(user.portfolio));
       setImage(user.portfolio.image);
-      setSkills(user.portfolio.skills);
+      dispatch(
+        updateData({
+          slug: session.user.email
+            .toLowerCase()
+            .slice(0, session.user.email.indexOf("@")),
+        })
+      );
+      // Skills
+      let skillarr = user.portfolio.skills.map((skill) => {
+        return { value: skill.value, label: skill.label };
+      });
+      dispatch(updateData({ skills: skillarr }));
+      setSkills(skillarr);
+      // Projects
+      let projectarr = user.portfolio.projects.map((project) => {
+        return {
+          name: project.name,
+          image: project.image,
+          description: project.description,
+          liveLink: project.liveLink,
+          githubLink: project.githubLink,
+        };
+      });
+      dispatch(updateData({ projects: projectarr }));
+      // testimonials
+      let testimonialarr = user.portfolio.testimonials.map((testimonial) => {
+        return { name: testimonial.name, description: testimonial.description };
+      });
+      dispatch(updateData({ testimonials: testimonialarr }));
+      // Links
+      let linkarr = user.portfolio.links.map((link) => {
+        return { name: link.name, url: link.url };
+      });
+      dispatch(updateData({ links: linkarr }));
+      // contact
+      let contactarr = {
+        name: user.portfolio.contact.name,
+        email: user.portfolio.contact.email,
+        address: user.portfolio.contact.address,
+        phone: user.portfolio.contact.phone,
+      };
+      dispatch(updateData({ contact: contactarr }));
+      // Work
       const userWorks = user.portfolio.work.map((work) => {
         return work.title;
-      })
+      });
+      const workarr = user.portfolio.work.map((work) => {
+        return { title: work.title };
+      });
+      dispatch(updateData({ work: workarr }));
       setWorks(userWorks.join("."));
     } else {
       dispatch(addData(defaultData));
     }
   }, [dispatch, defaultData, user]);
-  
-  
-
-
-  console.log(data, "data");
 
   const handleChangeImage = (e) => {
     console.log(e.target.files[0]);
@@ -84,7 +139,7 @@ const Tabs = ({ query, user }) => {
     { value: "reactjs", label: "React Js" },
     { value: "nextjs", label: "Next Js" },
     { value: "javascript", label: "Java Script" },
-    { value: "mangodb", label: "Mango DB" },
+    { value: "mongodb", label: "Mongo DB" },
     { value: "mysql", label: "My SQL" },
     { value: "nodejs", label: "Node Js" },
     { value: "git", label: "Git" },
@@ -97,7 +152,7 @@ const Tabs = ({ query, user }) => {
     { value: "cplusplus", label: "C++" },
     { value: "chash", label: "C#" },
     { value: "java", label: "Java" },
-    { value: "anglurjs", label: "Anglur Js" },
+    { value: "angularjs", label: "Angular Js" },
     { value: "vuejs", label: "Vue Js" },
   ];
 
@@ -130,44 +185,28 @@ const Tabs = ({ query, user }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const body = data;
-    try {
+    if (user.portfolio === null) {
+      console.log("no");
       const response = await fetch("/api/portfolio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      });
-      if (response.status !== 200) {
-        console.log("something went wrong");
-        //set an error banner here
-      } else {
-        console.log("form submitted successfully !!!");
-        //set a success banner here
-      }
-      //check response, if success is false, dont take them to success page
-    } catch (error) {
-      console.log("there was an error submitting", error);
-    }
-  };
-
-  const handleSave = async (e) => {
-    e.preventDefault();
-    const body = data;
-    try {
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .finally(() => {
+          router.reload();
+        });
+    } else {
+      console.log("yes");
       const response = await fetch("/api/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
+      }).then((res) => {
+        console.log(res);
       });
-      if (response.status !== 200) {
-        console.log("something went wrong");
-        //set an error banner here
-      } else {
-        console.log("form submitted successfully !!!");
-        //set a success banner here
-      }
-      //check response, if success is false, dont take them to success page
-    } catch (error) {
-      console.log("there was an error submitting", error);
     }
   };
 
@@ -351,6 +390,44 @@ const Tabs = ({ query, user }) => {
                       dispatch(updateData({ textColor: e.target.value }));
                     }}
                   />
+                </div>
+              </div>
+              <div defaultValue={data.query} className="flex flex-col items-center max-w-3xl mx-auto  p-3 bg-[#EFF6F6] rounded-lg justify-between">
+                <p className="text-lg mb-5">Design</p>
+                <div className="flex flex-row justify-between w-full">
+                <input type="radio" id="one" value="one" name="design" onChange={() => {
+                  dispatch(updateData({query: "one"}))
+                }} />
+                <label for="one">
+                  <Image
+                    src="/images/one.png"
+                    width={150}
+                    height={100}
+                    alt="one"
+                  />
+                </label>
+                <input type="radio" id="two" value="two" name="design" onChange={() => {
+                  dispatch(updateData({query: "two"}))
+                }} />
+                <label for="two">
+                  <Image
+                    src="/images/two.png"
+                    width={150}
+                    height={100}
+                    alt="one"
+                  />
+                </label>
+                <input type="radio" id="three" value="three" name="design" onChange={() => {
+                  dispatch(updateData({query: "three"}))
+                }} />
+                <label for="three">
+                  <Image
+                    src="/images/three.png"
+                    width={150}
+                    height={100}
+                    alt="one"
+                  />
+                </label>
                 </div>
               </div>
             </div>

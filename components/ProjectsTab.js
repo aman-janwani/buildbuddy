@@ -1,3 +1,4 @@
+import _ from "lodash";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { HiPlus } from "react-icons/hi";
@@ -52,11 +53,19 @@ const ProjectsTab = () => {
     }
   };
 
+  console.log("data", data);
+
   useEffect(() => {
     if (projects.length > 0) {
       dispatch(updateData({ projects: projects }));
     }
   }, [projects]);
+
+  useEffect(() => {
+    if (data.projects) {
+      setProjects(data.projects);
+    }
+  }, [data]);
 
   const handleChangeImage = (e) => {
     console.log(e.target.files[0]);

@@ -44,6 +44,11 @@ const TestimonialTab = () => {
     }
   }, [testimonials]);
 
+  useEffect(() => {
+    if (data.testimonials) {
+      setTestimonials(data.testimonials);
+    }
+  }, [data]);
 
   function openModal() {
     setIsOpen(true);

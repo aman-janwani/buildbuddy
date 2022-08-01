@@ -1,27 +1,63 @@
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import logo from "../public/logo/1.svg";
 import { signIn, signOut } from "next-auth/react";
 import { useRouter } from "next/router";
 
-const Navbar = ({session}) => {
-
+const Navbar = ({ session, live }) => {
   const router = useRouter();
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    if (live) {
+      const username = live.portfolio.userEmail.toLowerCase().slice(0, live.portfolio.userEmail.indexOf('@'));
+      setUsername(username);
+      console.log(username);
+    }
+  }, [live]);
 
   return (
     <div className="flex items-center justify-between px-8">
-      <div onClick={() => {
-        router.push("/");
-      }} className="py-4 flex cursor-pointer items-center space-x-3">
+      <div
+        onClick={() => {
+          router.push("/");
+        }}
+        className="py-4 flex cursor-pointer items-center space-x-3"
+      >
         <Image src={logo} alt="logo" width={45} height={45} />
         <h1 className="font-['Cairo'] text-sm md:text-xl">Build Buddy</h1>
       </div>
       <div>
         {session ? (
-          <p onClick={() => {
-            router.push("/dashboard");
-          }} className="text-buildbuddyPurple cursor-pointer hover:text-lg duration-700">DashBoard</p>
-        ) : ("")}
+          <p
+            onClick={() => {
+              router.push("/dashboard");
+            }}
+            className="text-buildbuddyPurple cursor-pointer hover:text-lg duration-700"
+          >
+            DashBoard
+          </p>
+        ) : (
+          ""
+        )}
+      </div>
+      <div>
+        {live ? (
+          <a
+            onClick={() => {
+              router.push(`/${username}`);
+            }}
+            h
+            target="_blank"
+          >
+            <button className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full max-w-sm rounded-lg">
+              Live link
+            </button>
+          </a>
+        ) : (
+          ""
+        )}
       </div>
       <div>
         {session ? (

@@ -47,6 +47,7 @@ const ContactTab = () => {
     ]);      
   }, [linkedin, instagram, github, youtube]);
 
+
   useEffect(() => {
     if (data.links.length > 0) {
       setInstagram(data.links[0].url);
