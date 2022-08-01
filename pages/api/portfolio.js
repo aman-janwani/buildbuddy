@@ -73,7 +73,7 @@ async function addPortfolio(req, res) {
     return res.status(200).json(newEntry, { success: true });
   } catch (error) {
     console.error("Request error", error);
-    res.status(500).json({ error: "Error creating question", success: false });
+    res.status(500).json({ error, success: false });
   }
 }
 
