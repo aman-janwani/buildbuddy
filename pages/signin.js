@@ -30,7 +30,7 @@ export default function SignIn({ providers }) {
               className="bg-white w-full justify-self-end text-center flex p-0 justify-center h-fit rounded-lg"
             >
               <Image
-                src="/images/googleLogo.svg"
+                src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659333274/googlelogo_qkvzgp.svg"
                 alt={provider.name}
                 width={75}
                 height={75}
