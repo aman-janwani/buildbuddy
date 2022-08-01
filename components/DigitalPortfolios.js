@@ -6,31 +6,31 @@ import PortfolioTemplate from "./PortfolioTemplate";
 const DigitalPortfolios = () => {
   const Templates = [
     {
-      image: "/images/one.png",
+      image: "https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331438/one_e2lnbj.png",
       title: "one",
       avalible: true,
     }
     ,
     {
-      image: "/images/two.png",
+      image: "https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331435/two_dv4bnq.png",
       title: "two",
       avalible: true,
     }
     ,
     {
-      image: "/images/three.png",
+      image: "https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331434/three_mdrikd.png",
       title: "three",
       avalible: true,
     }
     ,
     {
-      image: "/images/Four.png",
+      image: "https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331435/Four_umtgan.png",
       title: "four",
       avalible: false,
     }
     ,
     {
-      image: "/images/Five.png",
+      image: "https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331434/Five_fpekhn.png",
       title: "five",
       avalible: false,
     }

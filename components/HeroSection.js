@@ -58,7 +58,7 @@ const HeroSection = () => {
           >
             <Image
               className="rounded-3xl h-96"
-              src="/images/one.png"
+              src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331438/one_e2lnbj.png"
               alt="banner image"
               width={500}
               height={400}
@@ -66,7 +66,7 @@ const HeroSection = () => {
             />
             <Image
               className="rounded-3xl h-96"
-              src="/images/two.png"
+              src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331435/two_dv4bnq.png"
               alt="banner image"
               width={500}
               height={400}
@@ -75,7 +75,7 @@ const HeroSection = () => {
           
             <Image
               className="rounded-3xl h-96"
-              src="/images/three.png"
+              src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659331434/three_mdrikd.png"
               alt="banner image"
               width={500}
               height={400}
