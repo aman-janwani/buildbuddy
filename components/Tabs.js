@@ -464,9 +464,9 @@ const Tabs = ({ query, user }) => {
           </Tab.Panel>
         </Tab.Panels>
       </Tab.Group>
-      <div className="flex justify-center">
+      <div className="flex justify-center space-x-3 items-center">
         {loading ? (
-          <AiOutlineLoading3Quarters className="h-5 w-5 animate-spin text-buildbuddyPurple" />
+          <AiOutlineLoading3Quarters className="h-8 w-8 animate-spin text-buildbuddyPurple" />
         ) : (
           ""
         )}
