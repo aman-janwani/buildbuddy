@@ -109,28 +109,6 @@ const Dashboard = ({ users }) => {
             })}
           </div>
         </div>
-        {/* <div className="flex bg-buildbuddyBlueLight px-10 justify-between items-center">
-          <div className="flex items-center space-x-4">
-            <div className="bg-white flex rounded-full hover:shadow-lg duration-700 space-x-2 w-fit p-3 px-6 items-center">
-              <h1 className="text-xl">https://linkesy/</h1>
-              <input
-                placeholder="username"
-                type="text"
-                value={username}
-                onChange={(e) =>
-                  setUsername(e.target.value.toLowerCase().replace(/\s/g, "-"))
-                }
-                className="outline-none py-3 text-xl rounded-r-full placeholder:text-lg"
-              />
-            </div>
-            <div className="bg-white p-6 rounded-full border cursor-pointer hover:shadow-lg active:scale-95 active:bg-gray-100 transition transform duration-150 ease-out">
-              <HiArrowRight className="text-2xl" />
-            </div>
-          </div>
-          <div>
-            <Image src={LinkesyImage} alt="linkesy" width={500} height={500} />
-          </div>
-        </div> */}
         <Footer />
       </main>
     </div>

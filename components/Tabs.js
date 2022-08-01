@@ -10,6 +10,7 @@ import ContactTab from "./ContactTab";
 import { useSession } from "next-auth/react";
 import _ from "lodash";
 import { useRouter } from "next/router";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 const Tabs = ({ query, user }) => {
   const [works, setWorks] = useState("");
@@ -17,6 +18,7 @@ const Tabs = ({ query, user }) => {
   const [newQuery, setNewQuery] = useState("");
   const [image, setImage] = useState("");
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (query.slug) {
@@ -187,6 +189,7 @@ const Tabs = ({ query, user }) => {
     const body = data;
     if (user.portfolio === null) {
       console.log("no");
+      setLoading(true);
       const response = await fetch("/api/portfolio", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -197,16 +200,22 @@ const Tabs = ({ query, user }) => {
         })
         .finally(() => {
           router.reload();
+          setLoading(false);
         });
     } else {
       console.log("yes");
+      setLoading(true);
       const response = await fetch("/api/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
-      }).then((res) => {
-        console.log(res);
-      });
+      })
+        .then((res) => {
+          console.log(res);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
@@ -392,42 +401,63 @@ const Tabs = ({ query, user }) => {
                   />
                 </div>
               </div>
-              <div defaultValue={data.query} className="flex flex-col items-center max-w-3xl mx-auto  p-3 bg-[#EFF6F6] rounded-lg justify-between">
+              <div
+                defaultValue={data.query}
+                className="flex flex-col items-center max-w-3xl mx-auto  p-3 bg-[#EFF6F6] rounded-lg justify-between"
+              >
                 <p className="text-lg mb-5">Design</p>
                 <div className="flex flex-row justify-between w-full">
-                <input type="radio" id="one" value="one" name="design" onChange={() => {
-                  dispatch(updateData({query: "one"}))
-                }} />
-                <label htmlFor="one">
-                  <Image
-                    src="/images/one.png"
-                    width={150}
-                    height={100}
-                    alt="one"
+                  <input
+                    type="radio"
+                    id="one"
+                    value="one"
+                    name="design"
+                    onChange={() => {
+                      dispatch(updateData({ query: "one" }));
+                    }}
                   />
-                </label>
-                <input type="radio" id="two" value="two" name="design" onChange={() => {
-                  dispatch(updateData({query: "two"}))
-                }} />
-                <label htmlFor="two">
-                  <Image
-                    src="/images/two.png"
-                    width={150}
-                    height={100}
-                    alt="one"
+                  <label htmlFor="one">
+                    <Image
+                      src="/images/one.png"
+                      width={150}
+                      height={100}
+                      alt="one"
+                    />
+                  </label>
+                  <input
+                    type="radio"
+                    id="two"
+                    value="two"
+                    name="design"
+                    onChange={() => {
+                      dispatch(updateData({ query: "two" }));
+                    }}
                   />
-                </label>
-                <input type="radio" id="three" value="three" name="design" onChange={() => {
-                  dispatch(updateData({query: "three"}))
-                }} />
-                <label htmlFor="three">
-                  <Image
-                    src="/images/three.png"
-                    width={150}
-                    height={100}
-                    alt="one"
+                  <label htmlFor="two">
+                    <Image
+                      src="/images/two.png"
+                      width={150}
+                      height={100}
+                      alt="one"
+                    />
+                  </label>
+                  <input
+                    type="radio"
+                    id="three"
+                    value="three"
+                    name="design"
+                    onChange={() => {
+                      dispatch(updateData({ query: "three" }));
+                    }}
                   />
-                </label>
+                  <label htmlFor="three">
+                    <Image
+                      src="/images/three.png"
+                      width={150}
+                      height={100}
+                      alt="one"
+                    />
+                  </label>
                 </div>
               </div>
             </div>
@@ -435,9 +465,17 @@ const Tabs = ({ query, user }) => {
         </Tab.Panels>
       </Tab.Group>
       <div className="flex justify-center">
+        {loading ? (
+          <AiOutlineLoading3Quarters className="h-5 w-5 animate-spin text-buildbuddyPurple" />
+        ) : (
+          ""
+        )}
         <button
           onClick={handleSubmit}
-          className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full max-w-sm rounded-lg"
+          disabled={loading}
+          className={`hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full max-w-sm rounded-lg ${
+            loading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
           Save
         </button>
