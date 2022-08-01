@@ -51,7 +51,7 @@ const Navbar = ({ session, live }) => {
             h
             target="_blank"
           >
-            <button className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-5 py-2 w-full max-w-sm rounded-lg">
+            <button className="hover:bg-buildbuddyYellowLight border-2 border-buildbuddyYellowLight duration-500 focus:brightness-110 px-1 lg:px-5 py-2 w-full max-w-sm rounded-lg">
               Live link
             </button>
           </a>

@@ -32,7 +32,7 @@ const Tabs = ({ query, user }) => {
     name: "",
     userEmail: session.user.email,
     position: "",
-    query: "",
+    query: router.query.slug,
     slug: session.user.email
       .toLowerCase()
       .slice(0, session.user.email.indexOf("@")),
@@ -418,7 +418,7 @@ const Tabs = ({ query, user }) => {
                   />
                   <label htmlFor="one">
                     <Image
-                      src="/images/one.png"
+                      src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659341721/one.png"
                       width={150}
                       height={100}
                       alt="one"
@@ -435,7 +435,7 @@ const Tabs = ({ query, user }) => {
                   />
                   <label htmlFor="two">
                     <Image
-                      src="/images/two.png"
+                      src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659341721/two.png"
                       width={150}
                       height={100}
                       alt="one"
@@ -452,7 +452,7 @@ const Tabs = ({ query, user }) => {
                   />
                   <label htmlFor="three">
                     <Image
-                      src="/images/three.png"
+                      src="https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659341721/three.png"
                       width={150}
                       height={100}
                       alt="one"

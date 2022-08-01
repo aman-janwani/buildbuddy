@@ -74,7 +74,8 @@ const Dashboard = ({ users }) => {
                     >
                       <Image
                         className="rounded-lg cursor-pointer duration-500 group-hover:brightness-[.3] bg-red-400"
-                        src={`/images/${user.portfolio.query}.png`}
+                        // src={`/images/${user.portfolio.query}.png`}
+                        src={`https://res.cloudinary.com/dfk5jbk5r/image/upload/v1659341721/${user.portfolio.query}.png`}
                         alt="image"
                         width={250}
                         height={150}
