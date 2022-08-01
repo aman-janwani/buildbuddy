@@ -23,7 +23,7 @@ async function addPortfolio(req, res) {
     .then(() => {
       console.log("Portfolio deleted");
     })
-    .then(() => {
+    .finally(() => {
     prisma.portfolio
         .create({
           include: {
@@ -76,7 +76,7 @@ async function addPortfolio(req, res) {
           },
         }).then((res) => {
           console.log("new data sent");
-          console.log("new",res);
+          console.log("new", res);
         })
         .catch((err) => {
           console.log(err);
@@ -85,5 +85,5 @@ async function addPortfolio(req, res) {
 
   // console.log("data", body);
   // console.log("body", updated);
-  return res.status(200).json(deletePortfolio, { success: true });
+  return res.status(200).json(deletePortfolio, "Deleted", { success: true });
 }
