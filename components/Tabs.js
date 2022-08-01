@@ -210,19 +210,12 @@ const Tabs = ({ query, user }) => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
       })
-        .finally((res) => {
-         fetch("/api/portfolio", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(body),
-          })
-            .then((res) => {
-              console.log("Hello",res);
-            })
-            .finally(() => {
-              setLoading(false);
-            });
+        .then((res) => {
+          console.log(res);
         })
+        .finally(() => {
+          setLoading(false);
+        });
     }
   };
 
