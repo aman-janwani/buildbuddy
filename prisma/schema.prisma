@@ -5,7 +5,7 @@ generator client {
 
 datasource db {
   provider = "mysql"
-  url = env("DATABASE_URL")
+  url = "mysql://k5r383plm498:pscale_pw_AiCRRhxSG-Lq7VjU0xtcFOavIPFwscsmx2mCM6D_4EI@qfh37ygntv2q.ap-south-2.psdb.cloud/buildbuddydb?sslaccept=strict"
   referentialIntegrity = "prisma"
 }
 
