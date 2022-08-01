@@ -1,10 +1,10 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import Typewriter from "typewriter-effect";
-import image from "../public/images/one.png";
-import image2 from "../public/images/two.png";
-import image3 from "../public/images/img.png";
-import image4 from "../public/images/linkesyBanner.svg";
+// import image from "../public/images/one.png";
+// import image2 from "../public/images/two.png";
+// import image3 from "../public/images/img.png";
+// import image4 from "../public/images/linkesyBanner.svg";
 import Image from "next/image";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
@@ -58,7 +58,7 @@ const HeroSection = () => {
           >
             <Image
               className="rounded-3xl h-96"
-              src={image}
+              src="/images/one.png"
               alt="banner image"
               width={500}
               height={400}
@@ -66,28 +66,22 @@ const HeroSection = () => {
             />
             <Image
               className="rounded-3xl h-96"
-              src={image2}
+              src="/images/two.png"
               alt="banner image"
               width={500}
               height={400}
               objectFit="contain"
             />
+          
             <Image
               className="rounded-3xl h-96"
-              src={image3}
+              src="/images/three.png"
               alt="banner image"
               width={500}
-              height={500}
+              height={400}
               objectFit="contain"
             />
-            <Image
-              className="rounded-3xl h-96"
-              src={image4}
-              alt="banner image"
-              width={500}
-              height={600}
-              objectFit="contain"
-            />
+          
           </Carousel>
         </div>
       </div>

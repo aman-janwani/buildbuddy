@@ -1,41 +1,36 @@
 import React from "react";
 import Image from "next/image";
 import { HiArrowRight } from "react-icons/hi";
-import image from "../public/images/one.png";
-import image2 from "../public/images/two.png";
-import image3 from "../public/images/three.png";
-import image4 from "../public/images/Four.png";
-import image5 from "../public/images/Five.png";
 import PortfolioTemplate from "./PortfolioTemplate";
 
 const DigitalPortfolios = () => {
   const Templates = [
     {
-      image: image,
+      image: "/images/one.png",
       title: "one",
       avalible: true,
     }
     ,
     {
-      image: image2,
+      image: "/images/two.png",
       title: "two",
       avalible: true,
     }
     ,
     {
-      image: image3,
+      image: "/images/three.png",
       title: "three",
       avalible: true,
     }
     ,
     {
-      image: image4,
+      image: "/images/Four.png",
       title: "four",
       avalible: false,
     }
     ,
     {
-      image: image5,
+      image: "/images/Five.png",
       title: "five",
       avalible: false,
     }

@@ -1,15 +1,9 @@
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import Navbar from "../components/Navbar";
-import image from "../public/images/one.png";
-import image2 from "../public/images/two.png";
-import image3 from "../public/images/three.png";
-import image4 from "../public/images/Four.png";
-import image5 from "../public/images/Five.png";
 import PortfolioTemplate from "../components/PortfolioTemplate";
 import { HiArrowRight } from "react-icons/hi";
 import { useSession } from "next-auth/react";
-import LinkesyImage from "../public/images/linkesy.svg";
 import Image from "next/image";
 import { useRouter } from "next/router";
 import Home from ".";
@@ -20,30 +14,34 @@ const Dashboard = ({ users }) => {
   console.log("users", users);
   const Templates = [
     {
-      image: image,
+      image: "/images/one.png",
       title: "one",
       avalible: true,
-    },
+    }
+    ,
     {
-      image: image2,
+      image: "/images/two.png",
       title: "two",
       avalible: true,
-    },
+    }
+    ,
     {
-      image: image3,
+      image: "/images/three.png",
       title: "three",
       avalible: true,
-    },
+    }
+    ,
     {
-      image: image4,
+      image: "/images/Four.png",
       title: "four",
       avalible: false,
-    },
+    }
+    ,
     {
-      image: image5,
+      image: "/images/Five.png",
       title: "five",
       avalible: false,
-    },
+    }
   ];
 
   const { data: session } = useSession();
