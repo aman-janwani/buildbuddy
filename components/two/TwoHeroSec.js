@@ -20,7 +20,7 @@ const TwoHeroSec = ({data}) => {
       </div>
       <div className="md:w-1/2 w-full my-20 md:my-0  justify-center uppercase">
         <div className="text-center md:text-end max-w-xl space-y-5">
-        <h1 className="text-3xl md:text-5xl">👋 I'm {data.name ? (data.name) : ("")}</h1>
+        <h1 className="text-3xl md:text-5xl">👋 I&quot;m {data.name ? (data.name) : ("")}</h1>
         <h2 className="text-sm md:text-base">{data.position ? (data.position): ("")} </h2>
         </div>
       </div>

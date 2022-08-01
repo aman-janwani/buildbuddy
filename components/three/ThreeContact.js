@@ -25,7 +25,7 @@ const ThreeContact = ({ data }) => {
       <div className="flex justify-between border-4 mx-auto max-w-2xl p-3 rounded-xl space-x-5 border-ThreeDark">
         {data.links.map((link, index) => {
           return (
-              <a href={link.url} key={index} target="_blank" className="cursor-pointer">
+              <a href={link.url} key={index} target="_blank"  rel="noreferrer"  className="cursor-pointer">
                 <Image
                   src={`/social/${link.name}.svg`}
                   alt={link.name}

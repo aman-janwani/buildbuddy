@@ -398,7 +398,7 @@ const Tabs = ({ query, user }) => {
                 <input type="radio" id="one" value="one" name="design" onChange={() => {
                   dispatch(updateData({query: "one"}))
                 }} />
-                <label for="one">
+                <label htmlFor="one">
                   <Image
                     src="/images/one.png"
                     width={150}
@@ -409,7 +409,7 @@ const Tabs = ({ query, user }) => {
                 <input type="radio" id="two" value="two" name="design" onChange={() => {
                   dispatch(updateData({query: "two"}))
                 }} />
-                <label for="two">
+                <label htmlFor="two">
                   <Image
                     src="/images/two.png"
                     width={150}
@@ -420,7 +420,7 @@ const Tabs = ({ query, user }) => {
                 <input type="radio" id="three" value="three" name="design" onChange={() => {
                   dispatch(updateData({query: "three"}))
                 }} />
-                <label for="three">
+                <label htmlFor="three">
                   <Image
                     src="/images/three.png"
                     width={150}

@@ -33,6 +33,7 @@ const TwoContact = ({data}) => {
               <a
                 href={link.url}
                 target="_blank"
+                rel="noreferrer" 
                 className="cursor-pointer"
               >
                 <Image
