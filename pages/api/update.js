@@ -13,6 +13,7 @@ export default async function handler(req, res) {
 }
 
 async function addPortfolio(req, res) {
+  let aman;
   const body = req.body;
   const deletePortfolio = prisma.portfolio
     .delete({
@@ -20,11 +21,12 @@ async function addPortfolio(req, res) {
         userEmail: body.userEmail,
       },
     })
-    .then(() => {
-      console.log("Portfolio deleted");
-    })
+    // .then(() => {
+    //   console.log("Portfolio deleted");
+    // })
     .finally(() => {
-    prisma.portfolio
+      console.log("Portfolio deleted");
+        prisma.portfolio
         .create({
           include: {
             projects: true,
@@ -76,14 +78,17 @@ async function addPortfolio(req, res) {
           },
         }).then((res) => {
           console.log("new data sent");
-          console.log("new", res);
+          aman = res;
+          console.log("aman", aman);
         })
         .catch((err) => {
           console.log(err);
         });
-    });
+    }).catch((err) => {
+      console.log(err);
+    })
 
   // console.log("data", body);
   // console.log("body", updated);
-  return res.status(200).json(deletePortfolio, "Deleted", { success: true });
+  return res.status(200).json(aman, "updated", { success: true });
 }
