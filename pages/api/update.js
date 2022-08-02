@@ -1,7 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
-import NextCors from "nextjs-cors";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -16,12 +15,6 @@ export default async function handler(req, res) {
 let aman;
 
 async function addPortfolio(req, res) {
-  await NextCors(req, res, {
-    // Options
-    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
-    origin: "*",
-    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
-  });
 
   const body = req.body;
   try {
@@ -43,13 +36,14 @@ async function addPortfolio(req, res) {
         }).then((res) => {
           console.log("Portfolio added");
           console.log(res);
-        });
+        })
       })
       .catch((err) => {
         console.log(err);
       });
 
-    return res.status(200).json(deletePortfolio, { success: true });
+      return res.status(200).json(deletePortfolio, { success: true });
+
   } catch (error) {
     console.error("Request error", error);
     res.status(500).json({ error, success: false });

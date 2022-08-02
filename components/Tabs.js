@@ -205,7 +205,7 @@ const Tabs = ({ query, user }) => {
     } else {
       console.log("yes");
       setLoading(true);
-      const response = await fetch("https://buildbuddy.vercel.app/api/update", {
+      const response = await fetch("/api/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(body),
