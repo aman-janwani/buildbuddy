@@ -92,7 +92,13 @@ async function addPortfolio(req, res) {
       // })
       .finally(() => {
         console.log("Portfolio deleted");
-        create(req, res);
+        const response =  fetch("https://buildbuddy.vercel.app/api/portfolio", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body),
+        }).finally(() => {
+          console.log("Portfolio added");
+        })
       })
       .catch((err) => {
         console.log(err);
