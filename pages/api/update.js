@@ -1,6 +1,7 @@
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
+import NextCors from "nextjs-cors";
 
 export default async function handler(req, res) {
   if (req.method === "POST") {
@@ -14,71 +15,14 @@ export default async function handler(req, res) {
 
 let aman;
 
-async function create(req, res) {
-  const body = req.body;
-  prisma.portfolio
-    .create({
-      include: {
-        projects: true,
-        work: true,
-        skills: true,
-        testimonials: true,
-        contact: true,
-        links: true,
-        user: true,
-      },
-      data: {
-        name: body.name,
-        userEmail: body.email,
-        position: body.position,
-        query: body.query,
-        backgroundColor: body.backgroundColor,
-        textColor: body.textColor,
-        image: body.image,
-        about: body.about,
-        slug: body.slug,
-        projects: {
-          create: body.projects,
-        },
-        work: {
-          create: body.work,
-        },
-        skills: {
-          create: body.skills,
-        },
-        testimonials: {
-          create: body.testimonials,
-        },
-        links: {
-          create: body.links,
-        },
-        contact: {
-          create: {
-            name: body.contact.name,
-            email: body.contact.email,
-            address: body.contact.address,
-            phone: body.contact.phone,
-          },
-        },
-        user: {
-          connect: {
-            email: body.userEmail,
-          },
-        },
-      },
-    })
-    .then((res) => {
-      console.log("new data sent");
-      aman = res;
-      console.log("aman", aman);
-    })
-    .catch((err) => {
-      console.log(err);
-      return res.status(500).json({ err, success: false });
-    });
-}
-
 async function addPortfolio(req, res) {
+  await NextCors(req, res, {
+    // Options
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    origin: "*",
+    optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+  });
+
   const body = req.body;
   try {
     const deletePortfolio = prisma.portfolio
@@ -90,22 +34,22 @@ async function addPortfolio(req, res) {
       // .then(() => {
       //   console.log("Portfolio deleted");
       // })
-      .finally(() => {
+      .then(() => {
         console.log("Portfolio deleted");
-        const response =  fetch("https://buildbuddy.vercel.app/api/portfolio", {
+        fetch("https://buildbuddy.vercel.app/api/portfolio", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
-        }).finally(() => {
+        }).then((res) => {
           console.log("Portfolio added");
-        })
+          console.log(res);
+        });
       })
       .catch((err) => {
         console.log(err);
       });
 
-      return res.status(200).json(deletePortfolio, { success: true });
-
+    return res.status(200).json(deletePortfolio, { success: true });
   } catch (error) {
     console.error("Request error", error);
     res.status(500).json({ error, success: false });
