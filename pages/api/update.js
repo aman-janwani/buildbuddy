@@ -15,41 +15,82 @@ export default async function handler(req, res) {
 let aman;
 
 async function addPortfolio(req, res) {
-
+  let responseAddNew;
   const body = req.body;
-  try {
-    const deletePortfolio = prisma.portfolio
-      .delete({
-        where: {
-          userEmail: body.userEmail,
-        },
-      })
-      // .then(() => {
-      //   console.log("Portfolio deleted");
-      // })
-      .then(() => {
-        console.log("Portfolio deleted");
-        fetch("https://buildbuddy.vercel.app/api/portfolio", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
+  const deletePortfolio = prisma.portfolio
+    .delete({
+      where: {
+        userEmail: body.userEmail,
+      },
+    })
+    // .then(() => {
+    //   console.log("Portfolio deleted");
+    // })
+    .finally(() => {
+      console.log("Portfolio deleted");
+        prisma.portfolio
+        .create({
+          include: {
+            projects: true,
+            work: true,
+            skills: true,
+            testimonials: true,
+            contact: true,
+            links: true,
+            user: true,
+          },
+          data: {
+            name: body.name,
+            userEmail: body.email,
+            position: body.position,
+            query: body.query,
+            backgroundColor: body.backgroundColor,
+            textColor: body.textColor,
+            image: body.image,
+            about: body.about,
+            slug: body.slug,
+            projects: {
+              create: body.projects,
+            },
+            work: {
+              create: body.work,
+            },
+            skills: {
+              create: body.skills,
+            },
+            testimonials: {
+              create: body.testimonials,
+            },
+            links: {
+              create: body.links,
+            },
+            contact: {
+              create: {
+                name: body.contact.name,
+                email: body.contact.email,
+                address: body.contact.address,
+                phone: body.contact.phone,
+              },
+            },
+            user: {
+              connect: {
+                email: body.userEmail,
+              },
+            },
+          },
         }).then((res) => {
-          console.log("Portfolio added");
-          console.log(res);
+          console.log("new data sent");
+          responseAddNew = res;
+          console.log("responseAddNew", responseAddNew);
         })
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-
-      return res.status(200).json(deletePortfolio, { success: true });
-
-  } catch (error) {
-    console.error("Request error", error);
-    res.status(500).json({ error, success: false });
-  }
+        .catch((err) => {
+          console.log(err);
+        });
+    }).catch((err) => {
+      console.log(err);
+    })
 
   // console.log("data", body);
   // console.log("body", updated);
-  // return res.status(200).json(deletePortfolio, "updated", { success: true });
+  return res.status(200).json(responseAddNew, "updated", { success: true });
 }
